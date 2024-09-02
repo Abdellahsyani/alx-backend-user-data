@@ -42,7 +42,7 @@
 * In this archive, you will find a simple API with one model: User. Storage of these users is done via a serialization/deserialization in files.
 
 ### Setup and start server
-`
+```
 bob@dylan:~$ pip3 install -r requirements.txt
 ...
 bob@dylan:~$
@@ -50,9 +50,9 @@ bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 python3 -m api.v1.app
  * Serving Flask app "app" (lazy loading)
 ...
 bob@dylan:~$
-`
+```
 ## Use the API (in another tab or in your browser)
-`
+```
 bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/status" -vvv
 *   Trying 0.0.0.0...
 * TCP_NODELAY set
@@ -73,4 +73,4 @@ bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/status" -vvv
 {"status":"OK"}
 * Closing connection 0
 bob@dylan:~$
-`
+```
