@@ -2,7 +2,7 @@
 """create a class authentication
 """
 from flask import request
-
+from typing import TypeVar
 
 class Auth:
     """API authentication
