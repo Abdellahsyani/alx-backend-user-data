@@ -30,4 +30,4 @@ def stats() -> str:
 def unouthorized():
     """unouthorized method
     """
-    return abort(401)
+    abort(401)
