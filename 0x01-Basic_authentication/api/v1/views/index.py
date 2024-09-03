@@ -31,3 +31,10 @@ def unouthorized() -> None:
     """unouthorized method
     """
     abort(401)
+
+
+@app_views.route('/forbidden/', strict_slashes=False)
+def forbidden() -> None:
+    """forbidden function
+    """
+    abort(403)
