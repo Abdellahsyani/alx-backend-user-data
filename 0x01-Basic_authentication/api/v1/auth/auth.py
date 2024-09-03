@@ -11,16 +11,27 @@ class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """return
         """
-        pass
+        if path in excluded_paths:
+            return False
+        return True
 
 
     def authorization_header(self, request=None) -> str:
         """return
         """
-        pass
+        head = request.headers.get('Authorization')
+        return head
 
 
     def current_user(self, request=None) -> TypeVar('User'):
         """return
         """
-        pass
+         authorization_header = request.headers.get('Authorization')
+        if authorization_header:
+            token = authorization_header.split(' ')[1]
+            # Validate the token and extract user information
+            user_data = validate_token(token)
+            if user_data:
+                return User(**user_data)  # Assuming User class has appropriate fields
+
+        return None
