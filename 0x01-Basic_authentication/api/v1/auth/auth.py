@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """create a class authentication
 """
+import re
 from flask import request
 from typing import List, TypeVar
 
