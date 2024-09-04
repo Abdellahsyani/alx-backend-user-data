@@ -9,13 +9,12 @@ import os
 
 from api.v1.views import app_views
 from api.v1.auth.auth import Auth
-from api.v1.auth.basic_auth import BasicAuth
 
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
-auth = None
+auth = Auth()
 auth_type = getenv('AUTH_TYPE', 'auth')
 
 
@@ -43,6 +42,9 @@ def forbidden(error) -> str:
 def authenticate_user():
     """Authenticates a user before processing a request.
     """
+    if auth is None:
+        return
+
     if auth:
         excluded_paths = [
             '/api/v1/status/',
