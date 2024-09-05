@@ -2,6 +2,7 @@
 """in this time the class empty
 """
 from api.v1.auth.auth import Auth
+from typing import Tuple
 import base64
 import binascii
 
@@ -43,3 +44,19 @@ class BasicAuth(Auth):
             return base64_str
         except (binascii.Error, UnicodeDecodeError):
             return None
+
+    def extract_user_credentials(
+            self,
+            decoded_base64_authorization_header: str) -> (str, str):
+        """ returns the user email and password from the Base64 decoded value.
+        """
+        if decoded_base64_authorization_header is None:
+            return (None, None)
+        if not isinstance(decoded_base64_authorization_header, str):
+            return (None, None)
+        if ':' not in decoded_base64_authorization_header:
+            return (None, None)
+        extract_user = decoded_base64_authorization_header.split(':', 1)
+        if len(extract_user) == 2:
+            return (extract_user[0], extract_user[1])
+        return (None, None)
