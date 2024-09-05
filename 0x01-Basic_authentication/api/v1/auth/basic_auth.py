@@ -3,6 +3,7 @@
 """
 from api.v1.auth.auth import Auth
 import base64
+import binascii
 
 
 class BasicAuth(Auth):
@@ -28,16 +29,15 @@ class BasicAuth(Auth):
         """
         if base64_authorization_header is None:
             return None
-        if type(base64_authorization_header) is not str:
+        if not isinstance(base64_authorization_header, str):
             return None
 
         try:
             # convert the decode part to byte
-            code_byte = base64.b64decode(base64_authorization_header)
+            code_byte = base64.b64decode(base64_authorization_header, validate=True)
 
             # convert byte to utf-8
-            base64_value = code_byte.decode('utf-8')
-            return base64_value
-        except Exception as error:
-            print("Error decoding base64: {}".format(error))
+            base64_str = code_byte.decode('utf-8')
+            return base64_str
+        except (binascii.Error,UnicodeDecodeError):
             return None
