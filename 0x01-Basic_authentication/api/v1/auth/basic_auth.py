@@ -34,10 +34,12 @@ class BasicAuth(Auth):
 
         try:
             # convert the decode part to byte
-            code_byte = base64.b64decode(base64_authorization_header, validate=True)
+            code_byte = base64.b64decode(
+                    base64_authorization_header,
+                    validate=True)
 
             # convert byte to utf-8
             base64_str = code_byte.decode('utf-8')
             return base64_str
-        except (binascii.Error,UnicodeDecodeError):
+        except (binascii.Error, UnicodeDecodeError):
             return None
