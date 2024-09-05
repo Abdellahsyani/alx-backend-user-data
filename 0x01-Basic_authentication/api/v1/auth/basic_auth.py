@@ -2,6 +2,7 @@
 """in this time the class empty
 """
 from api.v1.auth.auth import Auth
+import base64
 
 
 class BasicAuth(Auth):
@@ -20,7 +21,6 @@ class BasicAuth(Auth):
             return None
         return authorization_header[len('Basic '):]
 
-
     def decode_base64_authorization_header(
             self,
             base64_authorization_header: str) -> str:
@@ -31,18 +31,13 @@ class BasicAuth(Auth):
         if type(base64_authorization_header) is not str:
             return None
 
-        # check for the correct authorization_header
-        if not base64_authorization_header.startswith('Basic '):
-            return None
-
-        # remove the Basic and get decode part
-        decoded_byte = base64_authorization_header[len('Basic '):]
         try:
             # convert the decode part to byte
-            code_byte = base64.b64decode(decoded_byte, validate=True)
+            code_byte = base64.b64decode(base64_authorization_header)
 
             # convert byte to utf-8
-            return code_byte.decode('utf-8')
-        except (base64.binascii.Error, ValueError) as error:
+            base64_value = code_byte.decode('utf-8')
+            return base64_value
+        except Exception as error:
             print("Error decoding base64: {}".format(error))
             return None
