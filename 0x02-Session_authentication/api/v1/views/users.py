@@ -6,7 +6,6 @@ from flask import abort, jsonify, request
 from models.user import User
 
 
-
 @app_views.route('/users/me', methods=['GET'], strict_slashes=False)
 def get_authenticated_user():
     """ Get the authenticated user's info """
@@ -20,6 +19,7 @@ def get_authenticated_user():
     }
 
     return jsonify(user_data)
+
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def view_all_users() -> str:
