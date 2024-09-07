@@ -7,6 +7,20 @@ from models.user import User
 
 
 
+@app_views.route('/users/me', methods=['GET'], strict_slashes=False)
+def get_authenticated_user():
+    """ Get the authenticated user's info """
+    if request.current_user is None:
+        abort(404)  # No authenticated user, return 404
+    user_data = {
+        'first_name': request.current_user.first_name,
+        'last_name': request.current_user.last_name,
+        'password': request.current_user._password,
+        'email': request.current_user.email
+    }
+
+    return jsonify(user_data)
+
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def view_all_users() -> str:
     """ GET /api/v1/users
@@ -26,10 +40,10 @@ def view_one_user(user_id: str = None) -> str:
       - User object JSON represented
       - 404 if the User ID doesn't exist
     """
-    if user_id == me and request.current_user is None:
+    if user_id == "me" and request.current_user is None:
         abort(404)
     user = User.get(user_id)
-    if user_id == me and request.current_user is not None:
+    if user_id == "me" and request.current_user is not None:
         return jsonify(user.to_json())
 
 
