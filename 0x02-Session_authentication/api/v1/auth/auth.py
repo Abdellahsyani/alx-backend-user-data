@@ -3,7 +3,7 @@
 """
 import re
 import os
-from flask import request, cookies
+from flask import request
 from typing import List, TypeVar
 
 
