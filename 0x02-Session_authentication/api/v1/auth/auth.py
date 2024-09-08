@@ -2,7 +2,8 @@
 """create a class authentication
 """
 import re
-from flask import request
+import os
+from flask import request, cookies
 from typing import List, TypeVar
 
 
@@ -38,3 +39,12 @@ class Auth:
         """get the current user from the request
         """
         return None
+
+    def session_cookie(self, request=None):
+        """ return a cookie value
+        """
+        if request is None:
+            return None
+
+        cookie_value = os.getenv('SESSION_NAME', '_my_session_id')
+        return request.cookies.get(cookie_value)
